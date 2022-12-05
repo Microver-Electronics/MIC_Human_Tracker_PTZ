@@ -1,3 +1,4 @@
+
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 from PyQt5 import QtWidgets
@@ -38,6 +39,8 @@ class LaserControl():
 
     def __init__(self):
 
+        self.aux = Auxiliary()
+
         self.command_software_version_number = b'\xFF\x01\xAA\x0C\x01\x00\xEE'
 
         self.command_power_on = b'\xFF\x01\x00\x09\x00\x01\x0B'
@@ -46,6 +49,32 @@ class LaserControl():
 
         self.command_reset = b'\xFF\xAA\xEE'
 
+        self.command_led_on = b'\xFF\x01\xAA\x20\x00\x28\xEE'
+
+        self.laser_sync = 'FF'
+
+        self.laser_addr = '01'
+
+        self.laser_set_motor_pos_byte_2 = "AA"
+
+        self.laser_set_motor_pos_byte_3 = "E5"
+
+        self.laser_set_motor_pos_byte_4 = "00"
+
+        self.motor_position = "C8"
+
+        self.laser_set_motor_pos_byte_6 = "EE"
+
+        self.laser_set_output_power_byte_2 = "AA"
+
+        self.laser_set_output_power_byte_3 = "20"
+
+        self.laser_set_output_power_byte_4 = "00"
+
+        self.laser_power = "28"
+
+        self.laser_set_output_power_byte_6 = "EE"
+
     def send_command_to_laser(self, message):
         GPIO.setup(TXDEN_2, GPIO.OUT) 
         GPIO.output(TXDEN_2, GPIO.LOW) 
@@ -53,6 +82,38 @@ class LaserControl():
         if (message == "version"):
 
             ser_laser.serial.write(self.command_software_version_number)
+
+        elif(message == "changemotorspeed"):
+
+            message_hex_list = [
+            self.laser_sync,
+            self.laser_addr,
+            self.laser_set_motor_pos_byte_2,
+            self.laser_set_motor_pos_byte_3,
+            self.laser_set_motor_pos_byte_4,
+            self.motor_position,
+            self.laser_set_motor_pos_byte_6
+            ]
+
+            print(message_hex_list)
+
+            ser_laser.serial.write(bytearray.fromhex("".join(message_hex_list)))
+
+        elif(message == "changelaserpower"):
+
+            message_hex_list = [
+            self.laser_sync,
+            self.laser_addr,
+            self.laser_set_output_power_byte_2,
+            self.laser_set_output_power_byte_3,
+            self.laser_set_output_power_byte_4,
+            self.laser_power,
+            self.laser_set_output_power_byte_6
+            ]
+
+            print(message_hex_list)
+
+            ser_laser.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
         elif (message == "poweron"):
 
@@ -66,6 +127,10 @@ class LaserControl():
 
             ser_laser.serial.write(self.command_reset)
 
+        elif(message == "ledon"):
+
+            ser_laser.serial.write(self.command_led_on)
+
         time.sleep(0.005)#Waiting to send
 
         GPIO.output(TXDEN_2, GPIO.HIGH)
@@ -77,6 +142,8 @@ class PTZCommander():
     def __init__(self):
 
         self.aux = Auxiliary()
+
+        self.ser_ptz = config.config(dev = "/dev/ttySC0")
 
         self.ptz_sync = "FF"
 
@@ -218,15 +285,13 @@ class Worker(QtCore.QThread):
 
         while True:
 
-            GPIO.output(TXDEN_2, GPIO.HIGH)
+            GPIO.output(TXDEN_1, GPIO.HIGH)
 
             #data_t = ser_ptz.serial.read().hex()
 
-            data_l = ser_laser.serial.read().hex()
+            data_ptz = ser_ptz.serial.read().hex()
 
-            data += str(data_l)
-
-            print("WOrker")
+            data += str(data_ptz)
 
             GPIO.output(TXDEN_1, GPIO.LOW)
 
@@ -245,6 +310,8 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
     def __init__(self, parent=None):
         
         self.ptzCommander = PTZCommander()
+
+        self.laserControl = LaserControl()
         
         super().__init__(parent)
         
@@ -266,6 +333,14 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         self.ui.ptz_speed_slider.valueChanged.connect(self.set_pan_speed)
 
+        self.ui.laser_beam_angle_slider.valueChanged.connect(self.set_laser_beam_angle)
+
+        self.ui.laser_motor_position_slider.valueChanged.connect(
+            lambda: self.set_motor_position(message="changemotorspeed"))
+
+        self.ui.laser_power_slider.valueChanged.connect(
+            lambda: self.drive_laser(message="changelaserpower"))
+
         self.ui.laser_power_on_button.clicked.connect(
             lambda: self.drive_laser(message="poweron")
         )
@@ -282,6 +357,10 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
             lambda: self.drive_laser(message="reset")
         )
 
+        self.ui.led_max_button.clicked.connect(
+            lambda: self.drive_laser(message="ledon")
+        )
+
         self.ui.relay_on_button.clicked.connect(self.drive_relay_on)
 
         self.ui.relay_off_button.clicked.connect(self.drive_relay_off)
@@ -289,6 +368,38 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.thread = Worker(parent=None, QLineEdit=self.ui.lne_read)
 
         self.thread.start()
+
+    def set_laser_power(self):
+
+        slider_value = self.ui.laser_power_slider.value()
+
+        aux = Auxiliary()
+
+        power = round(aux.scale(slider_value, (0, 100), (0, 40)))
+
+        self.laserControl.laser_power = hex(power)[2:]
+
+    def set_motor_position(self, message):
+
+        slider_value = self.ui.laser_power_slider.value()
+
+        aux = Auxiliary()
+
+        position = round(aux.scale(slider_value, (0, 100), (30, 200)))
+
+        self.laserControl.motor_position = hex(position)[2:]
+
+        self.laserControl.send_command_to_laser(message)
+
+    def set_laser_beam_angle(self):
+
+        slider_value = self.ui.laser_beam_angle_slider.value()
+
+        aux = Auxiliary()
+
+        speed = round(aux.scale(slider_value, (0, 100), (30, 200)))
+
+        pass
 
     def set_pan_speed(self):
 
@@ -332,25 +443,6 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
         GPIO.output(26, GPIO.HIGH)
 
         time.sleep(0.2)
-
-        # if(message == "on"):
-
-        #     GPIO.cleanup()
-
-        #     GPIO.setmode(GPIO.BCM)
-
-        #     GPIO.setup(26, GPIO.OUT)
-
-        #     GPIO.output(26, GPIO.LOW)
-
-
-        # if(message == "off"):
-
-        #     GPIO.setup(26, GPIO.OUT)
-
-        #     GPIO.output(26, GPIO.HIGH)
-
-        #     pass
 
     def send_up_command(self):
         

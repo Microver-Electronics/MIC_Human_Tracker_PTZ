@@ -12,9 +12,9 @@ from threading import Thread
 
 def playground():
 
-    stream = cv2.VideoCapture(1)
+    stream = cv2.VideoCapture(0)
 
-    stream2 = cv2.VideoCapture(0)
+    #stream2 = cv2.VideoCapture(0)
 
     faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
@@ -26,7 +26,7 @@ def playground():
 
         grabbed, frame = stream.read()
 
-        grabbed2, frame2 = stream2.read()
+        #grabbed2, frame2 = stream2.read()
 
         image = cv2.resize(frame, None, fx=1, fy=1, interpolation=cv2.INTER_AREA)
 
@@ -43,9 +43,11 @@ def playground():
         face_rects = faceCascade.detectMultiScale(gray, 1.3, 5, minSize=(20, 20))
 
         if (len(face_rects) == 0):
-            
+
             counter +=1
-            if(counter == 100):
+            if(counter == 45):
+
+
                 ptz_controller.go_to_zero_pan()
                 ptz_controller.go_to_zero_tilt()
 
@@ -85,7 +87,7 @@ def playground():
 
         cv2.imshow("Video", image)
 
-        cv2.imshow("Video2", frame2)
+        #cv2.imshow("Video2", frame2)
 
         if cv2.waitKey(1) == ord("q"):
             break

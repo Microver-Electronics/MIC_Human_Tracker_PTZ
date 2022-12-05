@@ -86,6 +86,8 @@ class PelcoPtzController():
 
         self.ser = config.config(dev = "/dev/ttySC0")
 
+        self.ser_laser = config.config(dev = "/dev/ttySC1")
+
     def auto_speed_commander(self, x, y, distance):
 
         significant_command_list = [self.ptz_addr, ]
@@ -238,6 +240,10 @@ class PelcoPtzController():
             self.send_command(self.ptz_command_stop)
 
         print(x, y)
+
+    def send_control_command(self):
+
+        self.send_command(self.ptz_command_slow_left)
 
     def send_command(self, command):
         GPIO.setup(self.TXDEN_1, GPIO.OUT)
@@ -427,6 +433,21 @@ class PelcoPtzController():
                     self.ser.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
         return self
+
+    def send_command_to_laser():
+
+        GPIO.setup(self.TXDEN_2, GPIO.OUT)
+
+        GPIO.output(TXDEN_1, GPIO.LOW) 
+
+        self.ser_laser.serial.write(b'\xFF\x01\x00\x09\x00\x01\x0B')
+
+        time.sleep(0.05)
+
+        GPIO.output(self.TXDEN_2, GPIO.HIGH)
+
+
+        pass
 
     def go_to_zero_pan(self):
 

@@ -365,7 +365,7 @@
     <property name="geometry">
      <rect>
       <x>790</x>
-      <y>300</y>
+      <y>290</y>
       <width>41</width>
       <height>16</height>
      </rect>
@@ -385,7 +385,7 @@
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>340</y>
+      <y>320</y>
       <width>170</width>
       <height>80</height>
      </rect>
@@ -458,7 +458,7 @@
      <string>PTZ Custom Command</string>
     </property>
    </widget>
-   <widget class="QSlider" name="laser_set_motor_speed_slider">
+   <widget class="QSlider" name="laser_motor_position_slider">
     <property name="geometry">
      <rect>
       <x>730</x>
@@ -481,14 +481,14 @@
      </rect>
     </property>
     <property name="text">
-     <string>Set Motor Speed</string>
+     <string>Motor Position</string>
     </property>
    </widget>
    <widget class="QPushButton" name="laser_reset_button">
     <property name="geometry">
      <rect>
       <x>770</x>
-      <y>460</y>
+      <y>500</y>
       <width>80</width>
       <height>23</height>
      </rect>
@@ -553,6 +553,71 @@
     </property>
     <property name="text">
      <string>PTZ Speed</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="laser_beam_angle_slider">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>460</y>
+      <width>160</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_18">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>460</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Beam Angle</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_19">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>480</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Laser Power</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="laser_power_slider">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>480</y>
+      <width>160</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="led_max_button">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>400</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Led Max</string>
     </property>
    </widget>
   </widget>
