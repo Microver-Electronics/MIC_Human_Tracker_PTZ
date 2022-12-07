@@ -1,7 +1,7 @@
 import serial
 import config
 
-import RPi.GPIO as GPIO
+#import RPi.###GPIO as ##GPIO
 import time
 import lib.auxiliary as aux
 
@@ -84,9 +84,9 @@ class PelcoPtzController():
         self.TXDEN_1 = 27
         self.TXDEN_2 = 22
 
-        self.ser = config.config(dev = "/dev/ttySC0")
+        self.ser = config.config(dev = "/dev/ttyS0")
 
-        self.ser_laser = config.config(dev = "/dev/ttySC1")
+        self.ser_laser = config.config(dev = "/dev/ttyS1")
 
     def auto_speed_commander(self, x, y, distance):
 
@@ -128,7 +128,7 @@ class PelcoPtzController():
 
                 self.send_command(self.ptz_command_up)
 
-        elif( y > 380 ):
+        elif( y > 320 ):
 
             if(x < 260):
 
@@ -246,79 +246,79 @@ class PelcoPtzController():
         self.send_command(self.ptz_command_slow_left)
 
     def send_command(self, command):
-        GPIO.setup(self.TXDEN_1, GPIO.OUT)
-        GPIO.output(self.TXDEN_1, GPIO.LOW)
+        ##GPIO.setup(self.TXDEN_1, ##GPIO.OUT)
+        ##GPIO.output(self.TXDEN_1, ##GPIO.LOW)
 
         self.ser.serial.write(command)
 
         time.sleep(0.005) #Waiting to send
 
-        GPIO.output(self.TXDEN_1, GPIO.HIGH)
+        ##GPIO.output(self.TXDEN_1, ##GPIO.HIGH)
         
         return self
 
     def send_up_command(self):
-        GPIO.setup(TXDEN_1, GPIO.OUT)
-        GPIO.output(self.TXDEN_1, GPIO.LOW)
+        ##GPIO.setup(TXDEN_1, ##GPIO.OUT)
+        ##GPIO.output(self.TXDEN_1, ##GPIO.LOW)
 
         self.ser.serial.write(self.ptz_command_up)
 
         time.sleep(0.005) #Waiting to send
 
-        GPIO.output(self.TXDEN_1, GPIO.HIGH)
+        #GPIO.output(self.TXDEN_1, #GPIO.HIGH)
         
         return self
 
     def send_down_command(self):
-        GPIO.setup(TXDEN_1, GPIO.OUT)
-        GPIO.output(self.TXDEN_1, GPIO.LOW)
+        #GPIO.setup(TXDEN_1, #GPIO.OUT)
+        #GPIO.output(self.TXDEN_1, #GPIO.LOW)
 
         self.ser.serial.write(self.ptz_command_down)
 
         time.sleep(0.005) #Waiting to send
 
-        GPIO.output(self.TXDEN_1, GPIO.HIGH)
+        #GPIO.output(self.TXDEN_1, #GPIO.HIGH)
         
         return self
 
     def send_right_command(self):
-        GPIO.setup(TXDEN_1, GPIO.OUT)
-        GPIO.output(self.TXDEN_1, GPIO.LOW)
+        #GPIO.setup(TXDEN_1, #GPIO.OUT)
+        #GPIO.output(self.TXDEN_1, #GPIO.LOW)
 
         self.ser.serial.write(self.ptz_command_right)
 
         time.sleep(0.005) #Waiting to send
 
-        GPIO.output(self.TXDEN_1, GPIO.HIGH)
+        #GPIO.output(self.TXDEN_1, #GPIO.HIGH)
         
         return self
 
     def send_stop_command(self):
-        GPIO.setup(self.TXDEN_1, GPIO.OUT)
-        GPIO.output(self.TXDEN_1, GPIO.LOW)
+        #GPIO.setup(self.TXDEN_1, #GPIO.OUT)
+        #GPIO.output(self.TXDEN_1, #GPIO.LOW)
 
         self.ser.serial.write(self.ptz_command_stop)
 
         time.sleep(0.005) #Waiting to send
 
-        GPIO.output(self.TXDEN_1, GPIO.HIGH)
+        #GPIO.output(self.TXDEN_1, #GPIO.HIGH)
 
         return self
 
     def send_left_command(self):
-        GPIO.setup(TXDEN_1, GPIO.OUT)
-        GPIO.output(self.TXDEN_1, GPIO.LOW)
+        #GPIO.setup(TXDEN_1, #GPIO.OUT)
+        #GPIO.output(self.TXDEN_1, #GPIO.LOW)
 
         self.ser.serial.write(self.ptz_command_left)
 
         time.sleep(0.005) #Waiting to send
 
-        GPIO.output(self.TXDEN_1, GPIO.HIGH)
+        #GPIO.output(self.TXDEN_1, #GPIO.HIGH)
 
         return self
 
     def go_tilt_to_the_face(self, y_value):
-        GPIO.setup(TXDEN_1, GPIO.OUT)
+        #GPIO.setup(TXDEN_1, #GPIO.OUT)
         y_coordinat = y_value
 
         if(y_coordinat > 300):
@@ -335,7 +335,7 @@ class PelcoPtzController():
 
 
     def new_generation_set_pan_position(self, x_position, flag_q):
-        GPIO.setup(self.TXDEN_1, GPIO.OUT)
+        #GPIO.setup(self.TXDEN_1, #GPIO.OUT)
         if( flag_q.empty() == True):
 
             flag_q.put(x_position)
@@ -376,14 +376,14 @@ class PelcoPtzController():
 
                 message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_set_pan_cmd1, self.ptz_set_pan_cmd2, degree_hex[2:4], degree_hex[4:6], sum_of_hex_list[2:]]
 
-                GPIO.output(self.TXDEN_1, GPIO.LOW)
+                #GPIO.output(self.TXDEN_1, #GPIO.LOW)
 
                 self.ser.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
         return self
 
     def send_set_pan_command_to_ptz(self, in_q, flag_q):
-        GPIO.setup(TXDEN_1, GPIO.OUT)
+        #GPIO.setup(TXDEN_1, #GPIO.OUT)
         while True:
 
             x_degree = in_q.get()
@@ -428,7 +428,7 @@ class PelcoPtzController():
 
                     message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_set_pan_cmd1, self.ptz_set_pan_cmd2, degree_hex[2:4], degree_hex[4:6], sum_of_hex_list[2:]]
 
-                    GPIO.output(self.TXDEN_1, GPIO.LOW)
+                    #GPIO.output(self.TXDEN_1, #GPIO.LOW)
 
                     self.ser.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -436,15 +436,15 @@ class PelcoPtzController():
 
     def send_command_to_laser():
 
-        GPIO.setup(self.TXDEN_2, GPIO.OUT)
+        #GPIO.setup(self.TXDEN_2, #GPIO.OUT)
 
-        GPIO.output(TXDEN_1, GPIO.LOW) 
+        #GPIO.output(TXDEN_1, #GPIO.LOW) 
 
         self.ser_laser.serial.write(b'\xFF\x01\x00\x09\x00\x01\x0B')
 
         time.sleep(0.05)
 
-        GPIO.output(self.TXDEN_2, GPIO.HIGH)
+        #GPIO.output(self.TXDEN_2, #GPIO.HIGH)
 
 
         pass
@@ -471,8 +471,8 @@ class PelcoPtzController():
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_right_cmd1, self.ptz_right_cmd2, self.pan_speed, "00", sum_of_hex_list[2:]]
         
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW)
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -484,8 +484,8 @@ class PelcoPtzController():
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_left_cmd1, self.ptz_left_cmd2, self.pan_speed, "00", sum_of_hex_list[2:]]
         
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW)
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -497,8 +497,8 @@ class PelcoPtzController():
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_up_cmd1, self.ptz_up_cmd2, self.pan_speed, self.tilt_speed, sum_of_hex_list[2:]]
         
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW)
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -510,21 +510,21 @@ class PelcoPtzController():
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_down_cmd1, self.ptz_down_cmd2, self.pan_speed, self.tilt_speed, sum_of_hex_list[2:]]
         
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW)
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
         if(command == 'stop'):
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW) 
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW) 
             ser_ptz.serial.write(self.command_stop)
             time.sleep(0.005)#Waiting to send
-            GPIO.output(TXDEN_1, GPIO.HIGH)
+            #GPIO.output(TXDEN_1, #GPIO.HIGH)
 
         if(command=="test"):
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW) 
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW) 
             ser_ptz.serial.write(message)
             time.sleep(0.005)#Waiting to send
-            GPIO.output(TXDEN_1, GPIO.HIGH)
+            #GPIO.output(TXDEN_1, #GPIO.HIGH)

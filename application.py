@@ -20,7 +20,7 @@ import logging
 
 import struct
     
-import RPi.GPIO as GPIO
+#import RPi.#GPIO as #GPIO
 import time
 import config
 
@@ -29,11 +29,11 @@ from lib.auxiliary import Auxiliary
 TXDEN_1 = 27
 TXDEN_2 = 22
 
-ser_ptz = config.config(dev = "/dev/ttySC0")
+ser_ptz = config.config(dev = "/dev/ttyS0")
 
-ser_laser = config.config(dev = "/dev/ttySC1")
+ser_laser = config.config(dev = "/dev/ttyS1")
 
-GPIO.setup(26, GPIO.OUT)
+#GPIO.setup(26, #GPIO.OUT)
 
 class LaserControl():
 
@@ -76,8 +76,8 @@ class LaserControl():
         self.laser_set_output_power_byte_6 = "EE"
 
     def send_command_to_laser(self, message):
-        GPIO.setup(TXDEN_2, GPIO.OUT) 
-        GPIO.output(TXDEN_2, GPIO.LOW) 
+        #GPIO.setup(TXDEN_2, #GPIO.OUT) 
+        #GPIO.output(TXDEN_2, #GPIO.LOW) 
 
         if (message == "version"):
 
@@ -133,7 +133,7 @@ class LaserControl():
 
         time.sleep(0.005)#Waiting to send
 
-        GPIO.output(TXDEN_2, GPIO.HIGH)
+        #GPIO.output(TXDEN_2, #GPIO.HIGH)
 
         pass
 
@@ -143,7 +143,7 @@ class PTZCommander():
 
         self.aux = Auxiliary()
 
-        self.ser_ptz = config.config(dev = "/dev/ttySC0")
+        self.ser_ptz = config.config(dev = "/dev/ttyS0")
 
         self.ptz_sync = "FF"
 
@@ -201,8 +201,8 @@ class PTZCommander():
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_right_cmd1, self.ptz_right_cmd2, self.pan_speed, "00", sum_of_hex_list[2:]]
         
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW)
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -214,8 +214,8 @@ class PTZCommander():
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_left_cmd1, self.ptz_left_cmd2, self.pan_speed, "00", sum_of_hex_list[2:]]
         
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW)
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -227,8 +227,8 @@ class PTZCommander():
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_up_cmd1, self.ptz_up_cmd2, self.pan_speed, self.tilt_speed, sum_of_hex_list[2:]]
         
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW)
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -240,24 +240,24 @@ class PTZCommander():
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_down_cmd1, self.ptz_down_cmd2, self.pan_speed, self.tilt_speed, sum_of_hex_list[2:]]
         
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW)
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
         if(command == 'stop'):
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW) 
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW) 
             ser_ptz.serial.write(self.command_stop)
             time.sleep(0.005)#Waiting to send
-            GPIO.output(TXDEN_1, GPIO.HIGH)
+            #GPIO.output(TXDEN_1, #GPIO.HIGH)
 
         if(command=="test"):
-            GPIO.setup(TXDEN_1, GPIO.OUT)
-            GPIO.output(TXDEN_1, GPIO.LOW) 
+            #GPIO.setup(TXDEN_1, #GPIO.OUT)
+            #GPIO.output(TXDEN_1, #GPIO.LOW) 
             ser_ptz.serial.write(message)
             time.sleep(0.005)#Waiting to send
-            GPIO.output(TXDEN_1, GPIO.HIGH)
+            #GPIO.output(TXDEN_1, #GPIO.HIGH)
 
 class Worker(QtCore.QThread):
 
@@ -285,7 +285,7 @@ class Worker(QtCore.QThread):
 
         while True:
 
-            GPIO.output(TXDEN_1, GPIO.HIGH)
+            #GPIO.output(TXDEN_1, #GPIO.HIGH)
 
             #data_t = ser_ptz.serial.read().hex()
 
@@ -293,7 +293,7 @@ class Worker(QtCore.QThread):
 
             data += str(data_ptz)
 
-            GPIO.output(TXDEN_1, GPIO.LOW)
+            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             self.QLineEdit.setText(data)
 
@@ -422,25 +422,25 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
     def drive_relay_on(self):
 
-        GPIO.cleanup()
+        #GPIO.cleanup()
 
-        GPIO.setmode(GPIO.BCM)
+        #GPIO.setmode(#GPIO.BCM)
 
-        GPIO.setup(26, GPIO.OUT)
+        #GPIO.setup(26, #GPIO.OUT)
 
-        GPIO.output(26, GPIO.LOW)
+        #GPIO.output(26, #GPIO.LOW)
 
         time.sleep(0.2)
 
     def drive_relay_off(self):
 
-        GPIO.cleanup()
+        #GPIO.cleanup()
 
-        GPIO.setmode(GPIO.BCM)
+        #GPIO.setmode(#GPIO.BCM)
 
-        GPIO.setup(26, GPIO.OUT)
+        #GPIO.setup(26, #GPIO.OUT)
 
-        GPIO.output(26, GPIO.HIGH)
+        #GPIO.output(26, #GPIO.HIGH)
 
         time.sleep(0.2)
 

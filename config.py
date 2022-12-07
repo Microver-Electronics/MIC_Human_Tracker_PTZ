@@ -1,5 +1,5 @@
 import serial
-import RPi.GPIO as GPIO
+#import RPi.#GPIO as #GPIO
 
 TXDEN_1 = 27
 TXDEN_2 = 22
@@ -9,7 +9,7 @@ class config(object):
         
         ser.dev = dev
         ser.serial = serial.Serial(ser.dev, Baudrate)
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(TXDEN_1, GPIO.OUT)
-        GPIO.setup(TXDEN_2, GPIO.OUT)
+        #GPIO.setmode(#GPIO.BCM)
+        #GPIO.setwarnings(False)
+        #GPIO.setup(TXDEN_1, #GPIO.OUT)
+        #GPIO.setup(TXDEN_2, GPIO.OUT)
