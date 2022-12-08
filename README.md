@@ -2,6 +2,11 @@
 
 This is a project that performs face detection and tracking faces with Pelco PTZ.
 
+## Installation and Run
+
+- sh init.sh
+- sudo python3 application.py
+
 ## Comm
 
 - RS485
