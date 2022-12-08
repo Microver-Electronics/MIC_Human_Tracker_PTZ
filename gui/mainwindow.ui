@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>926</width>
-    <height>583</height>
+    <width>1149</width>
+    <height>664</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="left_button">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>250</y>
+      <x>540</x>
+      <y>270</y>
       <width>91</width>
       <height>30</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="up_button">
     <property name="geometry">
      <rect>
-      <x>460</x>
-      <y>210</y>
+      <x>640</x>
+      <y>230</y>
       <width>91</width>
       <height>30</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="right_button">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>250</y>
+      <x>740</x>
+      <y>270</y>
       <width>91</width>
       <height>30</height>
      </rect>
@@ -56,8 +56,8 @@
    <widget class="QPushButton" name="down_button">
     <property name="geometry">
      <rect>
-      <x>460</x>
-      <y>290</y>
+      <x>640</x>
+      <y>310</y>
       <width>91</width>
       <height>30</height>
      </rect>
@@ -69,8 +69,8 @@
    <widget class="QPushButton" name="stop_button">
     <property name="geometry">
      <rect>
-      <x>460</x>
-      <y>250</y>
+      <x>640</x>
+      <y>270</y>
       <width>91</width>
       <height>30</height>
      </rect>
@@ -82,9 +82,9 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>20</y>
-      <width>541</width>
+      <x>330</x>
+      <y>10</y>
+      <width>621</width>
       <height>51</height>
      </rect>
     </property>
@@ -100,8 +100,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>500</y>
+      <x>410</x>
+      <y>570</y>
       <width>391</width>
       <height>51</height>
      </rect>
@@ -118,9 +118,9 @@
    <widget class="QPushButton" name="test_button">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>180</x>
       <y>270</y>
-      <width>111</width>
+      <width>141</width>
       <height>30</height>
      </rect>
     </property>
@@ -133,7 +133,7 @@
      <rect>
       <x>50</x>
       <y>174</y>
-      <width>251</width>
+      <width>437</width>
       <height>80</height>
      </rect>
     </property>
@@ -315,8 +315,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>360</y>
+      <x>140</x>
+      <y>350</y>
       <width>221</width>
       <height>91</height>
      </rect>
@@ -325,8 +325,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>340</y>
+      <x>210</x>
+      <y>330</y>
       <width>91</width>
       <height>20</height>
      </rect>
@@ -344,8 +344,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>140</y>
+      <x>930</x>
+      <y>150</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -364,8 +364,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>290</y>
+      <x>960</x>
+      <y>350</y>
       <width>41</width>
       <height>16</height>
      </rect>
@@ -384,8 +384,8 @@
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>320</y>
+      <x>900</x>
+      <y>380</y>
       <width>170</width>
       <height>80</height>
      </rect>
@@ -421,8 +421,8 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>130</y>
+      <x>620</x>
+      <y>150</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -441,7 +441,7 @@
    <widget class="QLabel" name="label_15">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>170</x>
       <y>130</y>
       <width>171</width>
       <height>31</height>
@@ -461,8 +461,8 @@
    <widget class="QSlider" name="laser_motor_position_slider">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>430</y>
+      <x>900</x>
+      <y>510</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -474,9 +474,9 @@
    <widget class="QLabel" name="label_16">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>430</y>
-      <width>81</width>
+      <x>790</x>
+      <y>510</y>
+      <width>101</width>
       <height>16</height>
      </rect>
     </property>
@@ -487,8 +487,8 @@
    <widget class="QPushButton" name="laser_reset_button">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>500</y>
+      <x>940</x>
+      <y>570</y>
       <width>80</width>
       <height>23</height>
      </rect>
@@ -500,24 +500,24 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>190</y>
-      <width>168</width>
-      <height>80</height>
+      <x>900</x>
+      <y>200</y>
+      <width>173</width>
+      <height>41</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QPushButton" name="relay_on_button">
        <property name="text">
-        <string>Relay On</string>
+        <string>Relay 1 On</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="relay_off_button">
        <property name="text">
-        <string>Relay Off</string>
+        <string>Relay 1 Off</string>
        </property>
       </widget>
      </item>
@@ -526,8 +526,8 @@
    <widget class="QSlider" name="ptz_speed_slider">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>180</y>
+      <x>630</x>
+      <y>200</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -539,9 +539,9 @@
    <widget class="QLabel" name="label_17">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>180</y>
-      <width>61</width>
+      <x>540</x>
+      <y>200</y>
+      <width>81</width>
       <height>16</height>
      </rect>
     </property>
@@ -558,8 +558,8 @@
    <widget class="QSlider" name="laser_beam_angle_slider">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>460</y>
+      <x>900</x>
+      <y>530</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -571,9 +571,9 @@
    <widget class="QLabel" name="label_18">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>460</y>
-      <width>81</width>
+      <x>790</x>
+      <y>530</y>
+      <width>111</width>
       <height>16</height>
      </rect>
     </property>
@@ -584,9 +584,9 @@
    <widget class="QLabel" name="label_19">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>480</y>
-      <width>81</width>
+      <x>790</x>
+      <y>550</y>
+      <width>101</width>
       <height>16</height>
      </rect>
     </property>
@@ -597,8 +597,8 @@
    <widget class="QSlider" name="laser_power_slider">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>480</y>
+      <x>900</x>
+      <y>550</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -610,8 +610,8 @@
    <widget class="QPushButton" name="led_max_button">
     <property name="geometry">
      <rect>
-      <x>740</x>
-      <y>400</y>
+      <x>940</x>
+      <y>470</y>
       <width>80</width>
       <height>23</height>
      </rect>
@@ -620,14 +620,66 @@
      <string>Led Max</string>
     </property>
    </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>250</y>
+      <width>173</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="relay_on_button_2">
+       <property name="text">
+        <string>Relay 2 On</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="relay_off_button_2">
+       <property name="text">
+        <string>Relay 2 Off</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>300</y>
+      <width>173</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QPushButton" name="relay_on_button_3">
+       <property name="text">
+        <string>Relay 3 On</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="relay_off_button_3">
+       <property name="text">
+        <string>Relay 3 Off</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>926</width>
-     <height>20</height>
+     <width>1149</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

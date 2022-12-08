@@ -13,11 +13,11 @@ from flask import Flask, render_template,  Response
 import numpy as np
 
 app = Flask(__name__)
+
+
 def playground():
 
     stream = cv2.VideoCapture(0)
-
-    #stream2 = cv2.VideoCapture(0)
 
     faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 

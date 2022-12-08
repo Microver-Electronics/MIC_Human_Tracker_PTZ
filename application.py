@@ -19,12 +19,12 @@ import sys
 import logging
 
 import struct
-    
-#import RPi.#GPIO as #GPIO
+
 import time
 import config
 
 from lib.auxiliary import Auxiliary
+from lib.gpiocontrol import GpioControl 
 
 TXDEN_1 = 27
 TXDEN_2 = 22
@@ -32,8 +32,6 @@ TXDEN_2 = 22
 ser_ptz = config.config(dev = "/dev/ttyS0")
 
 ser_laser = config.config(dev = "/dev/ttyS1")
-
-#GPIO.setup(26, #GPIO.OUT)
 
 class LaserControl():
 
@@ -76,8 +74,6 @@ class LaserControl():
         self.laser_set_output_power_byte_6 = "EE"
 
     def send_command_to_laser(self, message):
-        #GPIO.setup(TXDEN_2, #GPIO.OUT) 
-        #GPIO.output(TXDEN_2, #GPIO.LOW) 
 
         if (message == "version"):
 
@@ -131,9 +127,7 @@ class LaserControl():
 
             ser_laser.serial.write(self.command_led_on)
 
-        time.sleep(0.005)#Waiting to send
-
-        #GPIO.output(TXDEN_2, #GPIO.HIGH)
+        time.sleep(0.005)
 
         pass
 
@@ -188,8 +182,6 @@ class PTZCommander():
         self.command_down_left = b'\xFF\x01\x00\x14\x1E\x1E\x51'
 
         self.test_command = b'\xFF\x01\x00\x4B\x1E\x1E\x88'
-        
-        pass
 
     def send_command_to_pzt(self, command=None, message=None):
         
@@ -200,9 +192,7 @@ class PTZCommander():
             sum_of_hex_list = self.aux.sum_of_hex_list_mod256(significant_cmd_list)
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_right_cmd1, self.ptz_right_cmd2, self.pan_speed, "00", sum_of_hex_list[2:]]
-        
-            #GPIO.setup(TXDEN_1, #GPIO.OUT)
-            #GPIO.output(TXDEN_1, #GPIO.LOW)
+ 
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -213,9 +203,6 @@ class PTZCommander():
             sum_of_hex_list = self.aux.sum_of_hex_list_mod256(significant_cmd_list)
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_left_cmd1, self.ptz_left_cmd2, self.pan_speed, "00", sum_of_hex_list[2:]]
-        
-            #GPIO.setup(TXDEN_1, #GPIO.OUT)
-            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -226,9 +213,7 @@ class PTZCommander():
             sum_of_hex_list = self.aux.sum_of_hex_list_mod256(significant_cmd_list)
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_up_cmd1, self.ptz_up_cmd2, self.pan_speed, self.tilt_speed, sum_of_hex_list[2:]]
-        
-            #GPIO.setup(TXDEN_1, #GPIO.OUT)
-            #GPIO.output(TXDEN_1, #GPIO.LOW)
+
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -239,25 +224,17 @@ class PTZCommander():
             sum_of_hex_list = self.aux.sum_of_hex_list_mod256(significant_cmd_list)
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_down_cmd1, self.ptz_down_cmd2, self.pan_speed, self.tilt_speed, sum_of_hex_list[2:]]
-        
-            #GPIO.setup(TXDEN_1, #GPIO.OUT)
-            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
         if(command == 'stop'):
-            #GPIO.setup(TXDEN_1, #GPIO.OUT)
-            #GPIO.output(TXDEN_1, #GPIO.LOW) 
+
             ser_ptz.serial.write(self.command_stop)
             time.sleep(0.005)#Waiting to send
-            #GPIO.output(TXDEN_1, #GPIO.HIGH)
 
         if(command=="test"):
-            #GPIO.setup(TXDEN_1, #GPIO.OUT)
-            #GPIO.output(TXDEN_1, #GPIO.LOW) 
             ser_ptz.serial.write(message)
             time.sleep(0.005)#Waiting to send
-            #GPIO.output(TXDEN_1, #GPIO.HIGH)
 
 class Worker(QtCore.QThread):
 
@@ -285,15 +262,9 @@ class Worker(QtCore.QThread):
 
         while True:
 
-            #GPIO.output(TXDEN_1, #GPIO.HIGH)
-
-            #data_t = ser_ptz.serial.read().hex()
-
             data_ptz = ser_ptz.serial.read().hex()
 
             data += str(data_ptz)
-
-            #GPIO.output(TXDEN_1, #GPIO.LOW)
 
             self.QLineEdit.setText(data)
 
@@ -312,7 +283,9 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.ptzCommander = PTZCommander()
 
         self.laserControl = LaserControl()
-        
+
+        self.gpio_control = GpioControl()
+
         super().__init__(parent)
         
         self.ui = Ui_MainWindow()
@@ -330,6 +303,30 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.ui.left_button.clicked.connect(self.send_left_command)
 
         self.ui.test_button.clicked.connect(self.send_test_command)
+
+        self.ui.relay_on_button.clicked.connect(
+            lambda: self.send_relay_command(relay_number=1, relay_command=0)
+        )
+
+        self.ui.relay_off_button.clicked.connect(
+            lambda: self.send_relay_command(relay_number=1, relay_command=1)
+        )
+
+        self.ui.relay_on_button_2.clicked.connect(
+            lambda: self.send_relay_command(relay_number=2, relay_command=0)
+        )
+
+        self.ui.relay_off_button_2.clicked.connect(
+            lambda: self.send_relay_command(relay_number=2, relay_command=1)
+        )
+
+        self.ui.relay_on_button_3.clicked.connect(
+            lambda: self.send_relay_command(relay_number=3, relay_command=0)
+        )
+
+        self.ui.relay_off_button_3.clicked.connect(
+            lambda: self.send_relay_command(relay_number=3, relay_command=1)
+        )
 
         self.ui.ptz_speed_slider.valueChanged.connect(self.set_pan_speed)
 
@@ -360,14 +357,24 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.ui.led_max_button.clicked.connect(
             lambda: self.drive_laser(message="ledon")
         )
-
-        self.ui.relay_on_button.clicked.connect(self.drive_relay_on)
-
-        self.ui.relay_off_button.clicked.connect(self.drive_relay_off)
         
         self.thread = Worker(parent=None, QLineEdit=self.ui.lne_read)
 
         self.thread.start()
+
+    def send_relay_command(self, relay_number, relay_command):
+
+        if(relay_number == 1):
+
+            self.gpio_control.controlRelay1(relay_command)
+
+        elif(relay_number == 2):
+
+            self.gpio_control.controlRelay2(relay_command)
+
+        elif(relay_number == 3):
+
+            self.gpio_control.controlRelay3(relay_command)
 
     def set_laser_power(self):
 
@@ -399,8 +406,6 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         speed = round(aux.scale(slider_value, (0, 100), (30, 200)))
 
-        pass
-
     def set_pan_speed(self):
 
         slider_value = self.ui.ptz_speed_slider.value()
@@ -412,37 +417,12 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.ptzCommander.pan_speed = hex(speed)[2:]
         self.ptzCommander.tilt_speed = hex(speed)[2:]
 
-        pass
 
     def drive_laser(self, message):
 
         laser_control = LaserControl()
 
         laser_control.send_command_to_laser(message)
-
-    def drive_relay_on(self):
-
-        #GPIO.cleanup()
-
-        #GPIO.setmode(#GPIO.BCM)
-
-        #GPIO.setup(26, #GPIO.OUT)
-
-        #GPIO.output(26, #GPIO.LOW)
-
-        time.sleep(0.2)
-
-    def drive_relay_off(self):
-
-        #GPIO.cleanup()
-
-        #GPIO.setmode(#GPIO.BCM)
-
-        #GPIO.setup(26, #GPIO.OUT)
-
-        #GPIO.output(26, #GPIO.HIGH)
-
-        time.sleep(0.2)
 
     def send_up_command(self):
         
