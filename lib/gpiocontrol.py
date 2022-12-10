@@ -7,8 +7,7 @@ from PyQt5.QtCore import Qt
 class GpioControl():
 
     def __init__(self):
-        
-
+    
         try:
             pin1export = open("/sys/class/gpio/export","w")
             pin1export.write("80")
@@ -32,8 +31,6 @@ class GpioControl():
             
         except:
             print("INFO: GPIO 3 already exists, skipping export")
-
-        
 
     def controlRelay1(self, value):
 

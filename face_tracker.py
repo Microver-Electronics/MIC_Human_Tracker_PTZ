@@ -14,12 +14,13 @@ import numpy as np
 
 app = Flask(__name__)
 
+frame = Queue()
 
 def playground():
 
     stream = cv2.VideoCapture(0)
 
-    faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
     ptz_controller = PelcoPtzController()
 
@@ -48,7 +49,7 @@ def playground():
         if (len(face_rects) == 0):
 
             counter +=1
-            if(counter == 25):
+            if(counter == 60):
 
                 ptz_controller.go_to_zero_pan()
                 ptz_controller.go_to_zero_tilt()
@@ -56,8 +57,6 @@ def playground():
         elif(len(face_rects) > 1):
 
             counter = 0
-
-            dummy_time_variable = time.time()
 
             first_face_x = None
             first_face_y = None
@@ -101,39 +100,6 @@ def playground():
         if cv2.waitKey(1) == ord("q"):
             break
 
-def everythingIsThread(source=0):
-
-    video_getter = VideoGet(source).start()
-
-    video_shower = VideoShow(video_getter.frame).start()
-
-    image_processor = FaceDetector(video_getter.frame).start_detect_faces_from_video_capture()
-
-    while True:
-
-        if video_getter.stopped or video_shower.stopped:
-            video_shower.stop()
-            video_getter.stop()
-
-        frame = video_getter.frame
-
-        image_processor.frame = frame
-
-        processed_image = image_processor.face_frame
-
-        video_shower.frame = processed_image
-
-def threadVideoShowandGet(source=0):
-
-    video_getter = VideoGet(source).start()
-
-    video_shower = VideoShow(video_getter.frame).start()
-    while True:
-
-        if video_getter.stopped or video_shower.stopped:
-
-            video_shower.stop()
-            video_getter.stop()
 
 @app.route('/')
 def index():

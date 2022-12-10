@@ -9,8 +9,6 @@ class FaceDetector:
 
         self.stopped = False
 
-        # self.frame = frame
-
         self.ds_factor = 0.7
 
         self.face_frame = 0
@@ -34,10 +32,6 @@ class FaceDetector:
             face_rects = self.faceCascade.detectMultiScale(gray, 1.3, 5, minSize=(30, 30))
 
             for (x, y, w, h) in face_rects:
-                
-                ## TO DO -> FLAG MANTIGINI OTURT, X KOORDINAT DEGISIMI  5 PIXELDEN BUYUK OLMADAN QUEUE'YA SOKMA !
-
-                # x_coordinate_flag = out_q.get()
 
                 face_rectangle_query = cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
@@ -63,19 +57,5 @@ class FaceDetector:
     def stop(self):
         
         self.stopped = True
-
-                # print(type(x_coordinate_flag)
-                
-                # if (abs(face_rects[0][x] - x_coordinate_flag[2])>5):
-                #     # sadece ilk gireni queue'ya sokuyorum
-                #     if (len(face_rects)) > 1:
-
-                #         out_q.put(face_rects[0])
- 
-                #     else:
-
-                #         out_q.put(face_rects[0])
-
-                # self.face_frame = cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
             
