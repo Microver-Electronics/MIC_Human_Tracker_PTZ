@@ -13,7 +13,7 @@ This is a project that performs body detection and tracking human bodies with Pe
 ## Installation and Run
 
 - sh init.sh
-- sudo python3 application.py
+- sudo python3 gui.py
 - sudo python3 body_tracker.py
 
 ## Dev Proccess
