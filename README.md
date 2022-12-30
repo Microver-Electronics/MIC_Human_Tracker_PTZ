@@ -1,11 +1,24 @@
 # Pelco PTZ Face Tracker
 
-This is a project that performs face detection and tracking faces with Pelco PTZ.
+This is a project that performs body detection and tracking human bodies with Pelco PTZ via rs485 communication.
+
+## Requirements
+
+- Intel OpenVino Dev Kit
+- Opencv
+- PyQt5
+- MobileNetSSD_deploy.prototxt
+- MobileNetSSD_deploy.caffemodel
 
 ## Installation and Run
 
 - sh init.sh
 - sudo python3 application.py
+- sudo python3 body_tracker.py
+
+## Dev Proccess Codes
+
+- pyuic5 gui\mainwindow.ui -o gui\mainwindow.py
 
 ## Comm
 
@@ -15,10 +28,3 @@ This is a project that performs face detection and tracking faces with Pelco PTZ
 
 - Face Tracking
 - Graphical User Interface for manuel control Pelco PTZ
-
-## To - Do
-
-- Body detect algorithm
-- Give the model the ability to not move towards certain people
-- Fine tuning for detection and control speed adjustments
-- Web Server

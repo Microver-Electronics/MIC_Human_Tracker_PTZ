@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1149</width>
-    <height>664</height>
+    <width>1807</width>
+    <height>960</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QPushButton" name="left_button">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>270</y>
-      <width>91</width>
-      <height>30</height>
+      <x>660</x>
+      <y>470</y>
+      <width>151</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -30,10 +30,10 @@
    <widget class="QPushButton" name="up_button">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>230</y>
-      <width>91</width>
-      <height>30</height>
+      <x>820</x>
+      <y>400</y>
+      <width>151</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -43,10 +43,10 @@
    <widget class="QPushButton" name="right_button">
     <property name="geometry">
      <rect>
-      <x>740</x>
-      <y>270</y>
-      <width>91</width>
-      <height>30</height>
+      <x>980</x>
+      <y>470</y>
+      <width>151</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -56,10 +56,10 @@
    <widget class="QPushButton" name="down_button">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>310</y>
-      <width>91</width>
-      <height>30</height>
+      <x>820</x>
+      <y>540</y>
+      <width>151</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -69,10 +69,10 @@
    <widget class="QPushButton" name="stop_button">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>270</y>
-      <width>91</width>
-      <height>30</height>
+      <x>820</x>
+      <y>470</y>
+      <width>151</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
@@ -82,9 +82,9 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>10</y>
-      <width>621</width>
+      <x>620</x>
+      <y>40</y>
+      <width>581</width>
       <height>51</height>
      </rect>
     </property>
@@ -94,14 +94,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Pelco Human Tracking System</string>
+     <string>Aselkon Armed Tracking System</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>570</y>
+      <x>710</x>
+      <y>850</y>
       <width>391</width>
       <height>51</height>
      </rect>
@@ -118,8 +118,8 @@
    <widget class="QPushButton" name="test_button">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>270</y>
+      <x>260</x>
+      <y>370</y>
       <width>141</width>
       <height>30</height>
      </rect>
@@ -131,9 +131,9 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>174</y>
-      <width>437</width>
+      <x>130</x>
+      <y>274</y>
+      <width>449</width>
       <height>80</height>
      </rect>
     </property>
@@ -299,8 +299,8 @@
    <widget class="QLabel" name="label_14">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>190</y>
+      <x>90</x>
+      <y>290</y>
       <width>31</width>
       <height>22</height>
      </rect>
@@ -315,8 +315,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>350</y>
+      <x>230</x>
+      <y>460</y>
       <width>221</width>
       <height>91</height>
      </rect>
@@ -325,9 +325,9 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>330</y>
-      <width>91</width>
+      <x>280</x>
+      <y>440</y>
+      <width>131</width>
       <height>20</height>
      </rect>
     </property>
@@ -344,8 +344,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>930</x>
-      <y>150</y>
+      <x>1350</x>
+      <y>170</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -364,8 +364,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>960</x>
-      <y>350</y>
+      <x>1390</x>
+      <y>380</y>
       <width>41</width>
       <height>16</height>
      </rect>
@@ -384,8 +384,8 @@
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>380</y>
+      <x>1330</x>
+      <y>410</y>
       <width>170</width>
       <height>80</height>
      </rect>
@@ -421,15 +421,15 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>150</y>
-      <width>151</width>
-      <height>31</height>
+      <x>740</x>
+      <y>220</y>
+      <width>311</width>
+      <height>81</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>24</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -441,8 +441,8 @@
    <widget class="QLabel" name="label_15">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>130</y>
+      <x>250</x>
+      <y>230</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -461,8 +461,8 @@
    <widget class="QSlider" name="laser_motor_position_slider">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>510</y>
+      <x>1330</x>
+      <y>540</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -474,8 +474,8 @@
    <widget class="QLabel" name="label_16">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>510</y>
+      <x>1220</x>
+      <y>540</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -487,8 +487,8 @@
    <widget class="QPushButton" name="laser_reset_button">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>570</y>
+      <x>1370</x>
+      <y>600</y>
       <width>80</width>
       <height>23</height>
      </rect>
@@ -500,8 +500,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>200</y>
+      <x>1320</x>
+      <y>220</y>
       <width>173</width>
       <height>41</height>
      </rect>
@@ -523,43 +523,11 @@
      </item>
     </layout>
    </widget>
-   <widget class="QSlider" name="ptz_speed_slider">
-    <property name="geometry">
-     <rect>
-      <x>630</x>
-      <y>200</y>
-      <width>160</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_17">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>200</y>
-      <width>81</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>PTZ Speed</string>
-    </property>
-   </widget>
    <widget class="QSlider" name="laser_beam_angle_slider">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>530</y>
+      <x>1330</x>
+      <y>560</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -571,8 +539,8 @@
    <widget class="QLabel" name="label_18">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>530</y>
+      <x>1220</x>
+      <y>560</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -584,8 +552,8 @@
    <widget class="QLabel" name="label_19">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>550</y>
+      <x>1220</x>
+      <y>580</y>
       <width>101</width>
       <height>16</height>
      </rect>
@@ -597,8 +565,8 @@
    <widget class="QSlider" name="laser_power_slider">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>550</y>
+      <x>1330</x>
+      <y>580</y>
       <width>160</width>
       <height>16</height>
      </rect>
@@ -610,8 +578,8 @@
    <widget class="QPushButton" name="led_max_button">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>470</y>
+      <x>1370</x>
+      <y>500</y>
       <width>80</width>
       <height>23</height>
      </rect>
@@ -623,8 +591,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>250</y>
+      <x>1320</x>
+      <y>270</y>
       <width>173</width>
       <height>41</height>
      </rect>
@@ -649,8 +617,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>300</y>
+      <x>1320</x>
+      <y>320</y>
       <width>173</width>
       <height>41</height>
      </rect>
@@ -672,19 +640,313 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="autonom_on_button">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>740</y>
+      <width>201</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>138</red>
+          <green>226</green>
+          <blue>52</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>138</red>
+          <green>226</green>
+          <blue>52</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>138</red>
+          <green>226</green>
+          <blue>52</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="text">
+     <string>Autonom Mode ON</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="autonom_off_button">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>740</y>
+      <width>201</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>239</red>
+          <green>41</green>
+          <blue>41</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>239</red>
+          <green>41</green>
+          <blue>41</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>239</red>
+          <green>41</green>
+          <blue>41</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="text">
+     <string>Autonom Mode OFF</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_5">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>300</y>
+      <width>311</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="label_17">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>PTZ Speed</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSlider" name="ptz_speed_slider">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="go_to_origin_button">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>650</y>
+      <width>171</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>252</red>
+          <green>233</green>
+          <blue>79</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>252</red>
+          <green>233</green>
+          <blue>79</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>252</red>
+          <green>233</green>
+          <blue>79</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="text">
+     <string>GO TO ORIGIN</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="start_body_tracking_button">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>130</y>
+      <width>171</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>237</red>
+          <green>212</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>239</red>
+          <green>239</green>
+          <blue>239</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="128">
+          <red>239</red>
+          <green>239</green>
+          <blue>239</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>237</red>
+          <green>212</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>239</red>
+          <green>239</green>
+          <blue>239</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="128">
+          <red>239</red>
+          <green>239</green>
+          <blue>239</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>237</red>
+          <green>212</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Text">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>190</red>
+          <green>190</green>
+          <blue>190</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="PlaceholderText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="128">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
+    <property name="text">
+     <string>Start Body Tracking</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1149</width>
+     <width>1807</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

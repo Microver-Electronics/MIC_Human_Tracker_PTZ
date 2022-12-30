@@ -3,13 +3,16 @@ import config
 
 import time
 import lib.auxiliary as aux
-
+import time
 from threading import Thread
+from lib.gpiocontrol import GpioControl
 
 class PelcoPtzController():
 
     def __init__(self, *args, **kwargs):
         self.AuxiliaryFunctions = aux.Auxiliary()
+
+        self.gpioController = GpioControl()
 
         self.ptz_command_stop = b'\xFF\x01\x00\x00\x00\x00\x01'
 
@@ -84,13 +87,12 @@ class PelcoPtzController():
         self.ptz_command_speed_down_right = b'\xFF\x01\x00\x12\x28\x28\x63'
 
         self.ptz_command_speed_down_left = b'\xFF\x01\x00\x14\x28\x28\x65'
-        
+
         ### ZERO
 
         self.ptz_command_zero_pan = b'\xFF\x01\x00\x4B\x00\x00\x4C'
 
         self.ptz_command_zero_tilt = b'\xFF\x01\x00\x4D\x00\x00\x4E'
-
 
         self.ptz_sync = "FF"
 
@@ -125,9 +127,9 @@ class PelcoPtzController():
         self.TXDEN_1 = 27
         self.TXDEN_2 = 22
 
-        self.ser = config.config(dev = "/dev/ttyS0")
+        self.ser = config.config(dev="/dev/ttyS0")
 
-        self.ser_laser = config.config(dev = "/dev/ttyS1")
+        self.ser_laser = config.config(dev="/dev/ttyS1")
 
     def auto_speed_commander(self, x, y, distance):
 
@@ -135,21 +137,39 @@ class PelcoPtzController():
 
         message_hex_type_list = []
 
-    def new_generation_set_pan_tilt_3(self, distance_from_origin, x, y, rect_start_x, rect_start_y, rect_end_x, rect_end_y):
+    def new_generation_set_pan_tilt_3(self, distance_from_origin, x, y, rect_start_x, rect_start_y, rect_end_x,
+                                      rect_end_y):
 
-        speed_control = round(self.AuxiliaryFunctions.scale(distance_from_origin, (0, 384), (1, 6)))
+        speed_control = round(self.AuxiliaryFunctions.scale(distance_from_origin, (0, 384), (1, 4)))
+
+        print("Uzaklik", distance_from_origin)
+
+        # if the person distance is smaller than 60 pixel, shoot!
+        if (distance_from_origin < 60):
+
+            self.gpioController.controlRelay2(0)
+
+            time.sleep(0.2)
+
+            self.gpioController.controlRelay2(1)
+
+            time.sleep(0.2)
+
+        elif (distance_from_origin >= 60):
+
+            self.gpioController.controlRelay2(1)  # stop laser
 
         print(speed_control)
 
-        if(speed_control == 1):
+        if (speed_control == 1):
 
-            if(y > rect_start_y and y < rect_end_y):
+            if (y > rect_start_y and y < rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_slow_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_slow_right)
 
@@ -157,13 +177,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_stop)
 
-            elif( y < rect_start_y ):
+            elif (y < rect_start_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_slow_up_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_slow_up_right)
 
@@ -171,13 +191,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_slow_up)
 
-            elif( y > rect_end_y ):
+            elif (y > rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_slow_down_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_slow_down_right)
 
@@ -185,15 +205,15 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_slow_down)
 
-        elif(speed_control == 2):
+        elif (speed_control == 2):
 
-            if(y > rect_start_y and y < rect_end_y):
+            if (y > rect_start_y and y < rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_right)
 
@@ -201,13 +221,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_stop)
 
-            elif( y < rect_start_y ):
+            elif (y < rect_start_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_up_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_up_right)
 
@@ -215,13 +235,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_up)
 
-            elif( y > rect_end_y ):
+            elif (y > rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_down_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_down_right)
 
@@ -229,15 +249,15 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_down)
 
-        elif(speed_control == 3):
+        elif (speed_control == 3):
 
-            if(y > rect_start_y and y < rect_end_y):
+            if (y > rect_start_y and y < rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_medium_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_medium_right)
 
@@ -245,13 +265,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_stop)
 
-            elif( y < rect_start_y ):
+            elif (y < rect_start_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_medium_up_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_medium_up_right)
 
@@ -259,13 +279,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_medium_up)
 
-            elif( y > rect_end_y ):
+            elif (y > rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_medium_down_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_medium_down_right)
 
@@ -273,15 +293,15 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_medium_down)
 
-        elif(speed_control == 4):
+        elif (speed_control == 4):
 
-            if(y > rect_start_y and y < rect_end_y):
+            if (y > rect_start_y and y < rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_speed_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_speed_right)
 
@@ -289,13 +309,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_stop)
 
-            elif( y < rect_start_y ):
+            elif (y < rect_start_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_speed_up_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_speed_up_right)
 
@@ -303,13 +323,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_speed_up)
 
-            elif( y > rect_end_y ):
+            elif (y > rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_speed_down_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_speed_down_right)
 
@@ -317,16 +337,15 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_speed_down)
 
-
         else:
 
-            if(y > rect_start_y and y < rect_end_y):
+            if (y > rect_start_y and y < rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_speed_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_speed_right)
 
@@ -334,13 +353,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_stop)
 
-            elif( y < rect_start_y ):
+            elif (y < rect_start_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_speed_up_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_speed_up_right)
 
@@ -348,13 +367,13 @@ class PelcoPtzController():
 
                     self.send_command(self.ptz_command_speed_up)
 
-            elif( y > rect_end_y ):
+            elif (y > rect_end_y):
 
-                if(x < rect_start_x):
+                if (x < rect_start_x):
 
                     self.send_command(self.ptz_command_speed_down_left)
 
-                elif(x > rect_end_x):
+                elif (x > rect_end_x):
 
                     self.send_command(self.ptz_command_speed_down_right)
 
@@ -366,15 +385,11 @@ class PelcoPtzController():
 
         self.ser.serial.write(command)
 
-        time.sleep(0.005) #Waiting to send
         return self
 
     def send_up_command(self):
 
-
         self.ser.serial.write(self.ptz_command_up)
-
-        time.sleep(0.005) #Waiting to send
 
         return self
 
@@ -382,23 +397,23 @@ class PelcoPtzController():
 
         self.ser.serial.write(self.ptz_command_down)
 
-        time.sleep(0.005) #Waiting to send
-        
+        time.sleep(0.005)  # Waiting to send
+
         return self
 
     def send_right_command(self):
 
         self.ser.serial.write(self.ptz_command_right)
 
-        time.sleep(0.005) #Waiting to send
-        
+        time.sleep(0.005)  # Waiting to send
+
         return self
 
     def send_stop_command(self):
 
         self.ser.serial.write(self.ptz_command_stop)
 
-        time.sleep(0.005) #Waiting to send
+        time.sleep(0.005)  # Waiting to send
 
         return self
 
@@ -406,12 +421,12 @@ class PelcoPtzController():
 
         self.ser.serial.write(self.ptz_command_left)
 
-        time.sleep(0.005) #Waiting to send
+        time.sleep(0.005)  # Waiting to send
 
         return self
 
     def send_set_pan_command_to_ptz(self, in_q, flag_q):
-        #GPIO.setup(TXDEN_1, #GPIO.OUT)
+        # GPIO.setup(TXDEN_1, #GPIO.OUT)
         while True:
 
             x_degree = in_q.get()
@@ -420,7 +435,7 @@ class PelcoPtzController():
 
                 flag_q.put(x_degree)
 
-            else :
+            else:
 
                 previous_x_position = flag_q.get()[0]
 
@@ -437,26 +452,28 @@ class PelcoPtzController():
                     previous_pan_degree = self.AuxiliaryFunctions.scale(previous_x_position, (0, 1280), (-2000, 3000))
 
                     print(pan_degree)
- 
+
                     if pan_degree < 0:
 
-                        degree_hex = self.AuxiliaryFunctions.hexfmt(round(36000 + pan_degree ))
+                        degree_hex = self.AuxiliaryFunctions.hexfmt(round(36000 + pan_degree))
 
                     elif pan_degree > 0:
 
-                        degree_hex = self.AuxiliaryFunctions.hexfmt(round(pan_degree ))
+                        degree_hex = self.AuxiliaryFunctions.hexfmt(round(pan_degree))
 
                     else:
 
-                        degree_hex = self.AuxiliaryFunctions.hexfmt(round(pan_degree ))
+                        degree_hex = self.AuxiliaryFunctions.hexfmt(round(pan_degree))
 
-                    significant_cmd_list = [self.ptz_addr, self.ptz_set_pan_cmd1, self.ptz_set_pan_cmd2, degree_hex[2:4], degree_hex[4:6]]
+                    significant_cmd_list = [self.ptz_addr, self.ptz_set_pan_cmd1, self.ptz_set_pan_cmd2,
+                                            degree_hex[2:4], degree_hex[4:6]]
 
                     sum_of_hex_list = self.AuxiliaryFunctions.sum_of_hex_list_mod256(significant_cmd_list)
 
-                    message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_set_pan_cmd1, self.ptz_set_pan_cmd2, degree_hex[2:4], degree_hex[4:6], sum_of_hex_list[2:]]
+                    message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_set_pan_cmd1, self.ptz_set_pan_cmd2,
+                                        degree_hex[2:4], degree_hex[4:6], sum_of_hex_list[2:]]
 
-                    #GPIO.output(self.TXDEN_1, #GPIO.LOW)
+                    # GPIO.output(self.TXDEN_1, #GPIO.LOW)
 
                     self.ser.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
@@ -472,57 +489,55 @@ class PelcoPtzController():
 
         self.send_command(self.ptz_command_zero_pan)
 
-
     def go_to_zero_tilt(self):
 
         self.send_command(self.ptz_command_zero_tilt)
 
     def send_command_to_pzt(self, command=None, message=None):
-        
-        if(command == 'right'):
 
+        if (command == 'right'):
             significant_cmd_list = [self.ptz_addr, self.ptz_right_cmd1, self.ptz_right_cmd2, self.pan_speed, "00"]
 
             sum_of_hex_list = self.aux.sum_of_hex_list_mod256(significant_cmd_list)
 
-            message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_right_cmd1, self.ptz_right_cmd2, self.pan_speed, "00", sum_of_hex_list[2:]]
+            message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_right_cmd1, self.ptz_right_cmd2, self.pan_speed,
+                                "00", sum_of_hex_list[2:]]
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
-        if(command == 'left'):
-            
+        if (command == 'left'):
             significant_cmd_list = [self.ptz_addr, self.ptz_left_cmd1, self.ptz_left_cmd2, self.pan_speed, "00"]
 
             sum_of_hex_list = self.aux.sum_of_hex_list_mod256(significant_cmd_list)
 
-            message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_left_cmd1, self.ptz_left_cmd2, self.pan_speed, "00", sum_of_hex_list[2:]]
+            message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_left_cmd1, self.ptz_left_cmd2, self.pan_speed,
+                                "00", sum_of_hex_list[2:]]
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
-        if(command == 'up'):
-            
+        if (command == 'up'):
             significant_cmd_list = [self.ptz_addr, self.ptz_up_cmd1, self.ptz_up_cmd2, self.pan_speed, self.tilt_speed]
 
             sum_of_hex_list = self.aux.sum_of_hex_list_mod256(significant_cmd_list)
 
-            message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_up_cmd1, self.ptz_up_cmd2, self.pan_speed, self.tilt_speed, sum_of_hex_list[2:]]
+            message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_up_cmd1, self.ptz_up_cmd2, self.pan_speed,
+                                self.tilt_speed, sum_of_hex_list[2:]]
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
-        if(command == 'down'):
-            
-            significant_cmd_list = [self.ptz_addr, self.ptz_down_cmd1, self.ptz_down_cmd2, self.pan_speed, self.tilt_speed]
+        if (command == 'down'):
+            significant_cmd_list = [self.ptz_addr, self.ptz_down_cmd1, self.ptz_down_cmd2, self.pan_speed,
+                                    self.tilt_speed]
 
             sum_of_hex_list = self.aux.sum_of_hex_list_mod256(significant_cmd_list)
 
-            message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_down_cmd1, self.ptz_down_cmd2, self.pan_speed, self.tilt_speed, sum_of_hex_list[2:]]
+            message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_down_cmd1, self.ptz_down_cmd2, self.pan_speed,
+                                self.tilt_speed, sum_of_hex_list[2:]]
 
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
-        if(command == 'stop'):
-
+        if (command == 'stop'):
             ser_ptz.serial.write(self.command_stop)
 
-        if(command=="test"):
-
+        if (command == "test"):
             ser_ptz.serial.write(message)

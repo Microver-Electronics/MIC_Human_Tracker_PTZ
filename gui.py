@@ -19,9 +19,23 @@ import sys
 import logging
 
 import struct
-
+import psutil
 import time
 import config
+from threading import Thread
+from os import getpid
+
+pid = getpid()
+# report the pid
+print(pid)
+
+import psutil
+
+process = psutil.Process(pid)
+
+process_name = process.name()
+
+print(process_name)
 
 from lib.auxiliary import Auxiliary
 from lib.gpiocontrol import GpioControl 
@@ -183,6 +197,26 @@ class PTZCommander():
 
         self.test_command = b'\xFF\x01\x00\x4B\x1E\x1E\x88'
 
+
+        self.ptz_command_zero_pan = b'\xFF\x01\x00\x4B\x00\x00\x4C'
+
+        self.ptz_command_zero_tilt = b'\xFF\x01\x00\x4D\x00\x00\x4E'
+
+    def send_command(self, command):
+
+        self.ser_ptz.serial.write(command)
+
+        return self
+
+    def go_to_zero_pan(self):
+
+        self.send_command(self.ptz_command_zero_pan)
+
+
+    def go_to_zero_tilt(self):
+
+        self.send_command(self.ptz_command_zero_tilt)
+
     def send_command_to_pzt(self, command=None, message=None):
         
         if(command == 'right'):
@@ -193,7 +227,6 @@ class PTZCommander():
 
             message_hex_list = [self.ptz_sync, self.ptz_addr, self.ptz_right_cmd1, self.ptz_right_cmd2, self.pan_speed, "00", sum_of_hex_list[2:]]
  
-
             ser_ptz.serial.write(bytearray.fromhex("".join(message_hex_list)))
 
         if(command == 'left'):
@@ -304,6 +337,12 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
 
         self.ui.test_button.clicked.connect(self.send_test_command)
 
+        self.ui.autonom_on_button.clicked.connect(self.autonom_mode_on)
+
+        self.ui.autonom_off_button.clicked.connect(self.autonom_mode_off)
+
+        self.ui.go_to_origin_button.clicked.connect(self.go_to_originn)
+
         self.ui.relay_on_button.clicked.connect(
             lambda: self.send_relay_command(relay_number=1, relay_command=0)
         )
@@ -361,6 +400,39 @@ class PTZQtGUIMainWindow(QMainWindow, Ui_MainWindow, QWidget):
         self.thread = Worker(parent=None, QLineEdit=self.ui.lne_read)
 
         self.thread.start()
+
+
+
+    def go_to_originn(self):
+
+        self.ptzCommander.go_to_zero_pan()
+        self.ptzCommander.go_to_zero_tilt()
+
+    def check_pid(self):
+
+        pid_list = [p.info for p in psutil.process_iter(attrs=['pid', 'name']) if 'python3' in p.info['name']]
+        result = pid_list[0]['pid']
+        return(result)
+
+    def autonom_mode_off(self):
+
+        pid = self.check_pid()
+
+        process = psutil.Process(pid)
+
+        process.suspend()
+
+        pass
+
+    def autonom_mode_on(self):
+
+        pid = self.check_pid()
+
+        process = psutil.Process(pid)
+
+        process.resume()
+
+        pass
 
     def send_relay_command(self, relay_number, relay_command):
 
