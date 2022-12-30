@@ -7,13 +7,12 @@
 ## Custom python modules
 from lib.pelco_ptz_controller import PelcoPtzController
 from lib.gpiocontrol import GpioControl
+from centroidtracker import CentroidTracker
 
 import cv2
 import datetime
 import imutils
 import numpy as np
-
-from centroidtracker import CentroidTracker
 
 from os import getpid
 
