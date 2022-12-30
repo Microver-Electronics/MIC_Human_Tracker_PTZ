@@ -16,7 +16,7 @@ This is a project that performs body detection and tracking human bodies with Pe
 - sudo python3 application.py
 - sudo python3 body_tracker.py
 
-## Dev Proccess Codes
+## Dev Proccess
 
 - pyuic5 gui\mainwindow.ui -o gui\mainwindow.py
 
