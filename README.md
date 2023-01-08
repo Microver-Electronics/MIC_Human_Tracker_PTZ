@@ -1,4 +1,4 @@
-# Pelco PTZ Face Tracker
+# Pelco PTZ Human Tracker
 
 This is a project that performs body detection and tracking human bodies with Pelco PTZ via rs485 communication.
 
